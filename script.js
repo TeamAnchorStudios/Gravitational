@@ -40,7 +40,6 @@
     let sounds = {
         break: new Audio('Sounds/break.mp3'),
         explosion: new Audio('Sounds/explosion.mp3'),
-        atmosphere: new Audio('Sounds/atmosphere.mp3'),
         impact: new Audio('Sounds/impact.mp3'),
         left: new Audio('Sounds/left.wav'),
         right: new Audio('Sounds/right.wav'),
@@ -107,6 +106,8 @@
         downArrow: new Image(),
         lockedLevel: new Image(),
         levels: [],
+        slider: new Image(),
+        settings: new Image(),
     }
     for(let i = 0; i < 256; i++){
         images.blocks.push(new Image());
@@ -123,6 +124,7 @@
         images.timedBlock[i-1].src = "Images/timedBlock/" + i + ".png";
     }
 
+    images.settings.src = "Images/settings.png";
     images.leftArrow.src = "Images/leftArrow.png";
     images.rightArrow.src = "Images/rightArrow.png";
     images.upArrow.src = "Images/upArrow.png";
@@ -172,22 +174,23 @@
     images.pressurePlateBlock.src = "Images/pressurePlateBlock.png";
     images.mine.src = "Images/mine.png";
     images.lockedLevel.src = "Images/lockedLevel.png";
+    images.slider.src = "Images/slider.png";
 
     for(let i = 0; i < images.buttonBlock.length; i++){
         images.buttonBlock[i].src = "Images/buttonBlock/" + (parseInt(i)+1).toString() + ".png";
     }
 
-
+    let volume = {
+        masterVolume: 0.75,
+        musicVolume: 0.75,
+        sfxVolume: 0.75
+    }
+    
     let levelsUnlocked = 16;
 
     function startGame(level = levelsUnlocked){
         gameOn = true;
         let gameOver = false;
-
-        sounds.atmosphere.currentTime = 0;
-        sounds.atmosphere.loop = true;
-        sounds.atmosphere.volume = 0;
-        sounds.atmosphere.play();
 
         let gravityPreset = [0, 0];
         let gravity = [0, 0];
@@ -200,13 +203,13 @@
         let levels = {
             1: {
                 levelSize: 6,
-                gravityCharges: 2,
+                gravityCharges: 3,
                 map:[
                     "bbbbbb",
                     "bP   b",
-                    "b bb b",
-                    "b bb b",   
-                    "b   @b",
+                    "bbbb b",
+                    "bbbb b",   
+                    "b@   b",
                     "bbbbbb",
                 ]
             },
@@ -656,6 +659,7 @@
                             }
                             this.dead = true;
                             sounds.break.currentTime = 0;
+                            sounds.break.volume = volume.masterVolume * volume.sfxVolume;
                             sounds.break.play();    
                         }
                         this.shield = false;
@@ -671,6 +675,7 @@
                         this.goalCountdown++;
                         if(this.goalCountdown === 0){
                             sounds.win.currentTime = 0;
+                            sounds.win.volume = volume.masterVolume * volume.sfxVolume;
                             sounds.win.play();
                             currentLevel++;
                             if(!(currentLevel > Object.keys(levels).length) && currentLevel > levelsUnlocked){
@@ -680,6 +685,7 @@
                         }
                         if(this.goalCountdown === 40){
                             sounds.door.currentTime = 0;
+                            sounds.door.volume = volume.masterVolume * volume.sfxVolume;
                             sounds.door.play();
                         }
                         if(this.goalCountdown > 180){
@@ -702,21 +708,25 @@
                         if(gravity[0] === 1){
                             robotAnimation = "right";
                             sounds.right.currentTime = 0;
+                            sounds.right.volume = volume.masterVolume * volume.sfxVolume;
                             sounds.right.play();
                         }
                         if(gravity[0] === -1){
                             robotAnimation = "left";
                             sounds.left.currentTime = 0;
+                            sounds.left.volume = volume.masterVolume * volume.sfxVolume;
                             sounds.left.play();
                         }
                         if(gravity[1] === 1){
                             robotAnimation = "down";
                             sounds.down.currentTime = 0;
+                            sounds.down.volume = volume.masterVolume * volume.sfxVolume;
                             sounds.down.play();
                         }
                         if(gravity[1] === -1){
                             robotAnimation = "up";
                             sounds.up.currentTime = 0;
+                            sounds.up.volume = volume.masterVolume * volume.sfxVolume;
                             sounds.up.play();
                         }
                         gravityPreset = [0,0];
@@ -728,6 +738,7 @@
                             onGravityChange();
                             robotAnimation = "left";
                             sounds.left.currentTime = 0;
+                            sounds.left.volume = volume.masterVolume * volume.sfxVolume;
                             sounds.left.play();
                         } else if(gravityPreset[0] === 0 && gravityPreset[1] === 0){
                             gravityPreset = [-1, 0];
@@ -739,6 +750,7 @@
                             onGravityChange();
                             robotAnimation = "right";
                             sounds.right.currentTime = 0;
+                            sounds.right.volume = volume.masterVolume * volume.sfxVolume;
                             sounds.right.play();
                         } else if(gravityPreset[0] === 0 && gravityPreset[1] === 0){
                             gravityPreset = [1, 0];
@@ -750,6 +762,7 @@
                             onGravityChange();
                             robotAnimation = "up";
                             sounds.up.currentTime = 0;
+                            sounds.up.volume = volume.masterVolume * volume.sfxVolume;
                             sounds.up.play();
                         } else if(gravityPreset[0] === 0 && gravityPreset[1] === 0){
                             gravityPreset = [0, -1];
@@ -761,6 +774,7 @@
                             onGravityChange();
                             robotAnimation = "down";
                             sounds.down.currentTime = 0;
+                            sounds.down.volume = volume.masterVolume * volume.sfxVolume;
                             sounds.down.play();
                         } else if(gravityPreset[0] === 0 && gravityPreset[1] === 0){
                             gravityPreset = [0, 1];
@@ -836,6 +850,7 @@
                         }
                         crates.splice(this.crateID, 1);
                         sounds.break.currentTime = 0;
+                        sounds.break.volume = volume.masterVolume * volume.sfxVolume;
                         sounds.break.play();
                         changeCrateIDs(this.crateID);
                         return true;
@@ -1015,7 +1030,7 @@
                 if(!this.exploded){
                     this.exploded = true;
                     sounds.explosion.currentTime = 0;
-                    sounds.explosion.volume = 0.7;
+                    sounds.explosion.volume = 0.8 * volume.masterVolume * volume.sfxVolume;
                     sounds.explosion.play();
                     explosions.push(new Explosion(this.x - blockSize / 2, this.y - blockSize / 2, this.width + blockSize, this.height + blockSize));
                 }
@@ -1916,9 +1931,6 @@
         function drawMainCanvas (){
             c.clearRect(0,0,480,270);
             c.drawImage(images.background, 0, 0, 480, 270);
-            if(sounds.atmosphere.volume < 0.5){
-                sounds.atmosphere.volume += 0.002;
-            }
             handleAtmosphericParticles();
             c.drawImage(images.floor, 0, 215, 480, 40);
             if(player.goalCountdown >= 40 && player.goalCountdown <= 60){
@@ -1951,7 +1963,7 @@
             if(sounds.music.paused){
                 sounds.music.currentTime = 0;
                 sounds.music.loop = true;
-                sounds.music.volume = 0.3;
+                sounds.music.volume = 0.3 * volume.masterVolume * volume.musicVolume;
                 sounds.music.play();
             }
             ctx.clearRect(0, 0, 1200, 1200);
@@ -2121,6 +2133,7 @@
                 if(isColliding(buttons[i], object)){
                     if(buttons[i].pressed === false){
                         sounds.beep.currentTime = 0;
+                        sounds.beep.volume = volume.masterVolume * volume.sfxVolume;
                         sounds.beep.play();
                     }
                     buttons[i].pressed = true;
@@ -2160,6 +2173,7 @@
                 }
                 if((!lastPressurePlatePressed && pressurePlatePressed)){
                     sounds.pressurePlate.currentTime = 0;
+                    sounds.pressurePlate.volume = volume.masterVolume * volume.sfxVolume;
                     sounds.pressurePlate.play();
                 }
             }
@@ -2195,6 +2209,7 @@
             for(let i = 0; i < bubbles.length; i++){
                 if(isColliding(bubbles[i], object)){
                     sounds.collect.currentTime = 0;
+                    sounds.collect.volume = volume.masterVolume * volume.sfxVolume;
                     sounds.collect.play();
                     gravityCharges++;
                     bubbles.splice(i, 1);
@@ -2206,6 +2221,7 @@
             for(let i = 0; i < shields.length; i++){
                 if(isColliding(shields[i], object) && object.shield === false){
                     sounds.collect.currentTime = 0;
+                    sounds.collect.volume = volume.masterVolume * volume.sfxVolume;
                     sounds.collect.play();
                     object.shield = true;
                     shields.splice(i, 1);
@@ -2227,6 +2243,7 @@
                 if(isColliding(keys[i], object)){
                     keys.splice(i, 1);
                     sounds.collect.currentTime = 0;
+                    sounds.collect.volume = volume.masterVolume * volume.sfxVolume;
                     sounds.collect.play();
                 }
             }
@@ -2246,8 +2263,6 @@
             gameOn = false;
             menu = "title";
             loadMenu();
-            sounds.atmosphere.pause();
-            sounds.atmosphere.currentTime = 0;
             sounds.music.pause();
             sounds.music.currentTime = 0;
             requestAnimationFrame(titleLoop);
@@ -2356,7 +2371,40 @@
         mouse.y = (event.clientY - rect.top) * (270 / rect.height);
     })
 
+    class Slider{
+        constructor(x, y, width, height, variable){
+            this.x = x;
+            this.y = y;
+            this.width = width;
+            this.height = height;
+            this.variable = variable;
+            this.isGrabbed = false;
+        }
+        draw(){
+            c.drawImage(images.slider, this.x, this.y, this.width, this.height);
+        }
+        update(){
+            volume[this.variable] = ((this.x + this.width / 2) - 140) / 200;
+            if(canClickButtons && isColliding(mouse, this) && mouse.leftClick){
+                this.grabbed = true;
+            }
+            if(!mouse.leftClick){
+                this.grabbed = false;
+            }
+            if(this.grabbed){
+                this.x = mouse.x;
+                if(this.x < 130){
+                    this.x = 130;
+                }
+                if(this.x > 330){
+                    this.x = 330;
+                }
+            }
+        }
+    }
+
     let menuButtons = [];
+    let sliders = [];
 
     class MenuButton{
         constructor(x, y, width, height, image, onPress, active = true){
@@ -2403,6 +2451,7 @@
 
     function loadMenu(){
         menuButtons = [];
+        sliders = [];
         if(menu === "title"){
             menuButtons.push(new MenuButton(210, 155, 60, 60, images.playButton, () => {
                 cancelAnimationFrame(title);
@@ -2426,6 +2475,9 @@
                 menu = "title";
                 loadMenu();
             }));
+            sliders.push(new Slider(130 + volume.masterVolume * 200, 60, 20, 40, "masterVolume"));
+            sliders.push(new Slider(130 + volume.musicVolume * 200, 135, 20, 40, "musicVolume"))
+            sliders.push(new Slider(130 + volume.sfxVolume * 200, 210, 20, 40, "sfxVolume"));;
         }
         if(menu === "levelSelect1"){
             menuButtons.push(new MenuButton(15, 15, 30, 30, images.backButton, () => {
@@ -2543,9 +2595,35 @@
         if(menu === "title"){
             c.drawImage(images.title, 30, 60, 460, 92);
         }
+        if(menu === "settings"){
+            c.drawImage(images.settings, 0, 0, 480, 270);
+            //80, 135, 210
+            c.beginPath();
+            c.moveTo(140, 80);
+            c.lineTo(340, 80);
+            c.lineWidth = 2;
+            c.strokeStyle = "rgb(255, 255, 255)";
+            c.stroke();
+            c.beginPath();
+            c.moveTo(140, 155);
+            c.lineTo(340, 155);
+            c.lineWidth = 2;
+            c.strokeStyle = "rgb(255, 255, 255)";
+            c.stroke();
+            c.beginPath();
+            c.moveTo(140, 230);
+            c.lineTo(340, 230);
+            c.lineWidth = 2;
+            c.strokeStyle = "rgb(255, 255, 255)";
+            c.stroke();
+        }
         for(let i = 0; i < menuButtons.length; i++){
             menuButtons[i].draw();
             menuButtons[i].update();
+        }
+        for(let i = 0; i < sliders.length; i++){
+            sliders[i].draw();
+            sliders[i].update();
         }
         if(mouse.leftClick){
             canClickButtons = false;
