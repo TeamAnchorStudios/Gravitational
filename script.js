@@ -50,7 +50,10 @@
         door: new Audio('Sounds/door.mp3'),
         beep: new Audio('Sounds/beep.mp3'),
         collect: new Audio('Sounds/collect.mp3'),
-        pressurePlate: new Audio('Sounds/pressurePlate.mp3')
+        pressurePlate: new Audio('Sounds/pressurePlate.mp3'),
+        mainMenuMusic: new Audio('Sounds/mainMenuMusic.mp3'),
+        button: new Audio('Sounds/button.mp3'),
+        restart: new Audio('Sounds/restart.mp3'),
     }
 
     let images = {
@@ -186,7 +189,7 @@
         sfxVolume: 0.75
     }
     
-    let levelsUnlocked = 16;
+    let levelsUnlocked = 17;
 
     function startGame(level = levelsUnlocked){
         gameOn = true;
@@ -506,7 +509,196 @@
                     "bc  +  B   + Pb",
                     "bbbbbbbbbbbbbbb",
                 ]
-            } 
+            },
+            17: {
+                levelSize: 7,
+                gravityCharges: 5,
+                map:[
+                    "bbbbbbb",
+                    "b     b",
+                    "bPbbb b",
+                    "bbbbb b",
+                    "b@bbb b",
+                    "b     b",
+                    "bbbbbbb",
+                ]
+            },
+            18: {
+                levelSize: 9,
+                gravityCharges: 5,
+                map:[
+                    "bbbbbbbbb",
+                    "b  b    b",
+                    "b++     b",
+                    "b       b",
+                    "b   @   b",
+                    "b       b",
+                    "b       b",
+                    "bP  b   b",
+                    "bbbbbbbbb",
+                ]
+            },
+            19: {
+                levelSize: 10,
+                gravityCharges: 8,
+                map:[
+                    "bbbbbbbbbb",
+                    "bP  b  ++b",
+                    "bb       b",
+                    "b@       b",
+                    "b b    b b",
+                    "b   +  +^b",
+                    "b>     +bb",
+                    "bb   b   b",
+                    "b>       b",
+                    "bbbbbbbbbb",
+                ]
+            },
+            20: {
+                levelSize: 13,
+                gravityCharges: 8,
+                map:[
+                    "bbbbbbbbbbbbb",
+                    "b           b",
+                    "b          +b",
+                    "b   bb bbbb b",
+                    "b    + +  b b",
+                    "b    bPb    b",
+                    "b    bbb    b",
+                    "b b  bb+    b",
+                    "b    bb  b  b",
+                    "bb          b",
+                    "bb    b    bb",
+                    "b   <bbb^^+@b",
+                    "bbbbbbbbbbbbb",
+                ]
+            },
+            21: {
+                levelSize: 15,
+                gravityCharges: 11,
+                map:[
+                    "bbbbbbbbbbbbbbb",
+                    "bb            b",
+                    "bv    bbb     b",
+                    "b  bbbbbv  b  b",
+                    "b  bbbb       b",
+                    "b^ b      b   b",
+                    "bb       bb   b",
+                    "bb       b    b",
+                    "b        b    b",
+                    "b           b b",
+                    "b bb+b     bb+b",
+                    "b+Pb+b    bbb+b",
+                    "b+bb+b   bbbbbb",
+                    "b+bb+bb@bbbbbbb",
+                    "bbbbbbbbbbbbbbb",
+                ]
+            },
+            22: {
+                levelSize: 15,
+                gravityCharges: 11,
+                map:[
+                    "bbbbbbbbbbbbbbb",
+                    "b          bbbb",
+                    "b             b",
+                    "b             b",
+                    "b             b",
+                    "b             b",
+                    "b^            b",
+                    "bbbbbbb       b",
+                    "b          +  b",
+                    "b+    b    ^^^b",
+                    "b     b    bbbb",
+                    "b+    b    bbvb",
+                    "b     b       b",
+                    "b Pcc bbbbbbb@b",
+                    "bbbbbbbbbbbbbbb",
+                ]
+            },
+            23: {
+                levelSize: 15,
+                gravityCharges: 8,
+                map:[
+                    "bbbbbbbbbbbbbbb",
+                    "bPcc          b",
+                    "bbbb          b",
+                    "b+           @b",
+                    "b             b",
+                    "b             b",
+                    "b b           b",
+                    "b             b",
+                    "b             b",
+                    "b             b",
+                    "b   bbb       b",
+                    "b             b",
+                    "b             b",
+                    "bbbb   +      b",
+                    "bbbbbbbbbbbbbbb",
+                ]
+            },
+            24: {
+                levelSize: 15,
+                gravityCharges: 1,
+                map:[
+                    "bbbbbbbbbbbbbbb",
+                    "b            @b",
+                    "b    +      + b",
+                    "b             b",
+                    "b             b",
+                    "b             b",
+                    "b+b           b",
+                    "b v         + b",
+                    "b             b",
+                    "b             b",
+                    "b             b",
+                    "b             b",
+                    "bc      <b  + b",
+                    "bPc    +      b",
+                    "bbbbbbbbbbbbbbb",
+                ]
+            },
+            25: {
+                levelSize: 15,
+                gravityCharges: 11,
+                map:[
+                    "bbbbbbbbbbbbbbb",
+                    "b     +      bb",
+                    "b +bbbb       b",
+                    "b bb>         b",
+                    "b             b",
+                    "b             b",
+                    "b             b",
+                    "b            +b",
+                    "b             b",
+                    "b    +        b",
+                    "b          ^ ^b",
+                    "b          bbbb",
+                    "b            @b",
+                    "bPb> c <b  bbbb",
+                    "bbbbbbbbbbbbbbb",
+                ]
+            },
+            26: {
+                levelSize: 15,
+                gravityCharges: 16,
+                map:[
+                    "bbbbbbbbbbbbbbb",
+                    "bbb   bb      b",
+                    "b   b  b b  b b",
+                    "b   b  b b  b+b",
+                    "b    b b b  b b",
+                    "bb     b b  b+b",
+                    "b    b b b  b b",
+                    "b + +    b  b+b",
+                    "bbbbbb bbb  b b",
+                    "b@     +    b+b",
+                    "bbbbbbb + + b b",
+                    "bPccc bbbbbbb b",
+                    "bbbbb +   +  0b",
+                    "bbbbbbbbbbbbb^b",
+                    "bbbbbbbbbbbbbbb",
+                ]
+            },
         };
 
         let blockSize = Math.round(1200 / levels[currentLevel].levelSize);
@@ -1735,12 +1927,18 @@
                 if((mouse.leftClick && canClick)){
                     if(mouse.x > 10 && mouse.x < 30 && mouse.y > 40 && mouse.y < 80){
                         if(!checkGoalCollisions(player) && !player.isFirstMove){
+                            sounds.restart.volume = volume.sfxVolume * volume.masterVolume;
+                            sounds.restart.currentTime = 0;
+                            sounds.restart.play();
                             resetLevel();
                         }
                     }
                 }
                 if(canPressR && key.r){
                     if(!checkGoalCollisions(player) && !player.isFirstMove){
+                        sounds.restart.volume = volume.sfxVolume * volume.masterVolume;
+                        sounds.restart.currentTime = 0;
+                        sounds.restart.play();
                         resetLevel();
                     }
                 }
@@ -1953,6 +2151,9 @@
             if(player.dead){
                 resetCountdown--;
                 if(resetCountdown === 0){
+                    sounds.restart.volume = volume.sfxVolume * volume.masterVolume;
+                    sounds.restart.currentTime = 0;
+                    sounds.restart.play();
                     resetLevel();
                     resetCountdown = 60;
                 }
@@ -1960,10 +2161,13 @@
         }
 
         function gameLoop(){
+            if(!sounds.mainMenuMusic.paused){
+                sounds.mainMenuMusic.pause();
+            }
+            sounds.music.volume = 0.7 * volume.masterVolume * volume.musicVolume;
             if(sounds.music.paused){
                 sounds.music.currentTime = 0;
                 sounds.music.loop = true;
-                sounds.music.volume = 0.3 * volume.masterVolume * volume.musicVolume;
                 sounds.music.play();
             }
             ctx.clearRect(0, 0, 1200, 1200);
@@ -2433,6 +2637,9 @@
                 this.targetWidth = this.defaultWidth + this.defaultWidth / 3;
                 this.targetHeight = this.defaultHeight + this.defaultHeight / 3;
                 if(mouse.leftClick && canClickButtons && this.active){
+                    sounds.button.volume = 0.5 * volume.sfxVolume * volume.masterVolume;
+                    sounds.button.currentTime = 0;
+                    sounds.button.play();
                     this.onPress();
                     canClickButtons = false;
                 }
@@ -2586,6 +2793,12 @@
     let menu = "title";
     loadMenu();
     function titleLoop(){
+        sounds.mainMenuMusic.volume = 0.5 * volume.masterVolume * volume.musicVolume;
+        if(sounds.mainMenuMusic.paused){
+            sounds.mainMenuMusic.currentTime = 0;
+            sounds.mainMenuMusic.loop = true;
+            sounds.mainMenuMusic.play();
+        }
         if(gameCanvas.style.display = "block"){
             gameCanvas.style.display = "none";
         }
